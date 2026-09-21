@@ -88,8 +88,20 @@ Auditing every body at once is one query, and should return nothing:
 
 ```bash
 gh pr list --state all --limit 100 --json number,body \
-  --jq '.[] | select(.body | test("session_")) | .number'
+  --jq '.[] | select(.body | test("session_[A-Za-z0-9]{16,}")) | .number'
 ```
+
+The length bound is load-bearing. A bare `test("session_")` matches two things
+that are not leaks and never will be: a redacted `session_<id>` written when
+quoting this problem, and the query string in this very code block, once it is
+pasted into a pull request description. Run that way it reports the pull
+request that documents the rule, for ever, which is how a check gets ignored.
+Matching an actual id instead reports only an actual id.
+
+That failure has now happened seven times in this repository: a check written
+as a bare keyword search matching its own documentation. It is the single most
+repeated mistake here, so treat any new grep-shaped check as guilty until its
+pattern has been run against the file that describes it.
 
 ### The larger exposure in this history is not the session link
 
