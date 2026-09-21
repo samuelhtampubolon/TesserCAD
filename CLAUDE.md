@@ -70,13 +70,21 @@ notes were swept and carried none.
 
 ### The larger exposure in this history is not the session link
 
-Seven commits, including the first, record `samuelhasudungant@gmail.com` as
-author and committer; the other 24 human commits use the GitHub `noreply`
-address. A working inbox in public history is harvested continuously, and is
-more directly actionable than a session id. It is equally unfixable in place,
-for the reasons above, and equally not worth a rewrite. Preventing a repeat is
-an account setting ("Keep my email addresses private", plus "Block command
-line pushes that expose my email"), not a repository change.
+Seven commits, including the first, record the owner's **personal email
+address** as author and committer; the other 24 human commits use the GitHub
+`noreply` address. A working inbox in public history is harvested
+continuously, and is more directly actionable than a session id. It is equally
+unfixable in place, for the reasons above, and equally not worth a rewrite.
+Preventing a repeat is an account setting ("Keep my email addresses private",
+plus "Block command line pushes that expose my email"), not a repository
+change.
+
+The address is deliberately **not written out here**. An earlier revision of
+this file quoted it in full, which took a string that existed only in git
+metadata and republished it into a tracked file — where a scraper reads plain
+text far more readily than it walks commit objects. Describing an exposure
+must not widen it. `git log --format='%ae' | sort -u` shows the addresses to
+anyone who needs them, without this file becoming another copy.
 
 ## What the commit message is for
 
