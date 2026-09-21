@@ -37,11 +37,19 @@ such rather than folded into a cleanup.
 ## Existing history
 
 Commits up to and including `90bce2a` carry a `Co-Authored-By` trailer from
-the earlier convention, and 42 of the 61 commits on `main` also carry a
+the earlier convention, and the commits before it also carry a
 `Claude-Session:` URL. They are left alone. Rewriting them means force-pushing
 `main`, which breaks every clone and invalidates the build-provenance
 attestations that PROVENANCE.md § 5 relies on to tie each released binary to
 its commit.
+
+How many of each there are is counted rather than quoted, for the reason
+PROVENANCE.md § 1 gives: the commit that corrects a quoted figure changes it.
+
+```bash
+git log --pretty=%B  | grep -c 'claude.ai/code/session'   # commits carrying the URL
+git log --pretty=%ae | sort | uniq -c                     # authoring identities
+```
 
 ### Why rewriting would not even work
 
@@ -53,8 +61,8 @@ retrievable by SHA; only Support-side garbage collection, or deleting the
 repository, removes them.
 
 So a rewrite would break every clone, move or orphan all five release tags,
-strand the attestation chain — and still leave all 42 messages readable at
-their old SHAs. It buys nothing and costs a great deal.
+strand the attestation chain, and still leave every one of those messages
+readable at its old SHA. It buys nothing and costs a great deal.
 
 What the session URL is, stated precisely so the trade can be judged: an
 identifier, not a credential. It grants no access on its own, and claude.ai
@@ -71,7 +79,7 @@ notes were swept and carried none.
 ### The larger exposure in this history is not the session link
 
 Seven commits, including the first, record the owner's **personal email
-address** as author and committer; the other 24 human commits use the GitHub
+address** as author and committer; every other human commit uses the GitHub
 `noreply` address. A working inbox in public history is harvested
 continuously, and is more directly actionable than a session id. It is equally
 unfixable in place, for the reasons above, and equally not worth a rewrite.
